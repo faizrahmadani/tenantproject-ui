@@ -35,6 +35,7 @@ const addTenant = (e: Event) => {
 				router.push('/')
 			},
 			onError: (error: any) => {
+				console.log(error.response.data.errors);
 				Object.assign(errors, error.response.data.errors)
 			},
 		}
@@ -56,8 +57,8 @@ const addTenant = (e: Event) => {
 								<label class="mb-1 fw-bold">Tenant Name</label>
 								<input required type="text" v-model="tenantName" class="form-control"
 									placeholder="Tenant Name" />
-								<div v-if="errors.tenantName" class="alert alert-danger mt-2 rounded-2">
-									{{ errors.tenantName }}
+								<div v-if="errors.TenantName" class="small mt-2 text-danger">
+									{{ errors.TenantName[0] }}
 								</div>
 							</div>
 
@@ -69,8 +70,8 @@ const addTenant = (e: Event) => {
 										{{ type.name }}
 									</option>
 								</select>
-								<div v-if="errors.tenantType" class="alert alert-danger mt-2 rounded-2">
-									{{ errors.tenantType }}
+								<div v-if="errors.TenantTypeId" class="small mt-2 text-danger">
+									{{ errors.TenantTypeId[0] }}
 								</div>
 							</div>
 
@@ -78,8 +79,8 @@ const addTenant = (e: Event) => {
 								<label class="mb-1 fw-bold">Tenant Address</label>
 								<input required type="text" v-model="tenantAddress" class="form-control"
 									placeholder="Tenant Address" />
-								<div v-if="errors.tenantAddress" class="alert alert-danger mt-2 rounded-2">
-									{{ errors.tenantAddress }}
+								<div v-if="errors.TenantAddress" class="small mt-2 text-danger">
+									{{ errors.TenantAddress[0] }}
 								</div>
 							</div>
 
@@ -87,8 +88,8 @@ const addTenant = (e: Event) => {
 								<label class="mb-1 fw-bold">Tenant Phone</label>
 								<input required type="text" v-model="tenantPhone" class="form-control"
 									placeholder="Tenant Phone" />
-								<div v-if="errors.tenantPhone" class="alert alert-danger mt-2 rounded-2">
-									{{ errors.tenantPhone }}
+								<div v-if="errors.TenantPhone" class="small mt-2 text-danger">
+									{{ errors.TenantPhone[0] }}
 								</div>
 							</div>
 
@@ -96,7 +97,7 @@ const addTenant = (e: Event) => {
 								<label class="mb-1 fw-bold">Booth Number</label>
 								<input required type="text" v-model="boothNum" class="form-control"
 									placeholder="Booth Number" />
-								<div v-if="errors.boothNum" class="alert alert-danger mt-2 rounded-2">
+								<div v-if="errors.boothNum" class="small mt-2 text-danger">
 									{{ errors.boothNum }}
 								</div>
 							</div>
@@ -105,7 +106,7 @@ const addTenant = (e: Event) => {
 								<label class="mb-1 fw-bold">Requested Area m²</label>
 								<input required type="text" v-model="areaSm" class="form-control"
 									placeholder="Requested Area m²" />
-								<div v-if="errors.areaSm" class="alert alert-danger mt-2 rounded-2">
+								<div v-if="errors.areaSm" class="small mt-2 text-danger">
 									{{ errors.areaSm }}
 								</div>
 							</div>
