@@ -1,0 +1,7 @@
+version: '3.8'
+services:
+  tenant-project-ui:
+    build: .
+    image: faizrahmadani/tenantproject-ui
+    ports:
+      - "3000:80"
