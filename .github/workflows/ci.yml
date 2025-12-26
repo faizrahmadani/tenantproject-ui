@@ -1,0 +1,48 @@
+name: Frontend CI/CD - Vue Docker VPS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-push-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build & Push Docker Image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: |
+            faizrahmadani/tenantproject-ui:latest
+            faizrahmadani/tenantproject-ui:${{ github.sha }}
+
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            docker pull faizrahmadani/tenantproject-ui:latest
+            docker stop tenant-project-ui || true
+            docker rm tenant-project-ui || true
+            docker run -d \
+              --name tenant-project-ui \
+              -p 5003:80 \
+              --restart unless-stopped \
+              faizrahmadani/tenantproject-ui:latest

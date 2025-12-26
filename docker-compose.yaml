@@ -4,4 +4,4 @@ services:
     build: .
     image: faizrahmadani/tenantproject-ui
     ports:
-      - "3000:80"
+      - "5003:80"
