@@ -23,6 +23,10 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: Create .env file
+        run: |
+          echo "VITE_API_URL=${{ secrets.VITE_API_URL }}" > .env.local
+
       - name: Build & Push Docker Image
         uses: docker/build-push-action@v5
         with:
@@ -45,6 +49,6 @@ jobs:
             docker rm tenant-project-ui || true
             docker run -d \
               --name tenant-project-ui \
-              -p 5003:80 \
+              -p 5001:80 \
               --restart unless-stopped \
               faizrahmadani/tenantproject-ui:latest
