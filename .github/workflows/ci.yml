@@ -8,7 +8,6 @@ on:
 jobs:
   build-push-deploy:
     runs-on: ubuntu-latest
-
     environment: tenantproject-ui-secrets
 
     steps:
@@ -33,7 +32,7 @@ jobs:
             faizrahmadani/tenantproject-ui:latest
             faizrahmadani/tenantproject-ui:${{ github.sha }}
 
-      - name: Deploy to VPS (SSH KEY)
+      - name: Deploy to VPS
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SERVER_HOST }}
