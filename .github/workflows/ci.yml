@@ -33,17 +33,12 @@ jobs:
             faizrahmadani/tenantproject-ui:latest
             faizrahmadani/tenantproject-ui:${{ github.sha }}
 
-      - name: Prepare SSH key
-        run: |
-          echo "${{ secrets.SERVER_SSH_KEY_B64 }}" | base64 -d > $GITHUB_WORKSPACE/key.pem
-          chmod 600 $GITHUB_WORKSPACE/key.pem
-
-      - name: Deploy to VPS (Password SSH)
+      - name: Deploy to VPS (SSH KEY)
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          password: ${{ secrets.SERVER_PASSWORD }}
+          username: ubuntu
+          key: ${{ secrets.SERVER_SSH_KEY }}
           port: 22
           script: |
             docker pull faizrahmadani/tenantproject-ui:latest
